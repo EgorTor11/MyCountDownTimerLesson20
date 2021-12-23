@@ -23,6 +23,7 @@ lateinit var countDownTimer:CountDownTimer
             override fun onFinish() {
                 liveData.value="0"
 Toast.makeText(getApplication(),"Finish",Toast.LENGTH_LONG).show()
+vibro(getApplication())
             }
 
         }.start()

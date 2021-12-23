@@ -15,6 +15,7 @@
         android:textColor="#0E1850"
         android:textSize="96sp"
         android:textStyle="bold|italic"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.458"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -40,5 +41,16 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvStartDownTimer" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="479dp"
+        android:layout_height="311dp"
+        android:layout_marginTop="68dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/tvStartDownTimer"
+        app:layout_constraintStart_toStartOf="@+id/tvStartDownTimer"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

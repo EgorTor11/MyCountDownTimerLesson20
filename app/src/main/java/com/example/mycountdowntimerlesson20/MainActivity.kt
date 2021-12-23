@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (mViewModel.liveData.value == null || mViewModel.liveData.value == "0") {
-                 mViewModel.startTimer(str.toLong())//
+                 mViewModel.startTimer(str.toLong(),binding.imageView)//
 
             } else {
                 mViewModel.countDownTimer.cancel()

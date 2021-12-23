@@ -14,7 +14,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 lateinit var countDownTimer:CountDownTimer
 
     fun startTimer(p0:Long){
-     countDownTimer= object : CountDownTimer(p0*1000,1000){
+     countDownTimer= object : CountDownTimer(p0*1000+1000,1){
             override fun onTick(millisUntilFinished: Long) {
              //   binding.tvCount.text = (millisUntilFinished/1000).toString()
                 liveData.value=(millisUntilFinished/1000).toString()

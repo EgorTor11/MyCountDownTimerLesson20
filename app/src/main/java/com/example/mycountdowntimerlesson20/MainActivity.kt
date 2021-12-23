@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.mycountdowntimerlesson20.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    val numberListAndWhitespace = listOf<String>("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", " ")
+    val numberList = listOf<String>("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
     lateinit var mViewModel: MainViewModel
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,9 +27,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.tvStartDownTimer.setOnClickListener {
             var str = "0"
-            binding.editTextTextPersonName.text.toString().forEach {
-                if (!numberListAndWhitespace.contains(it.toString())) {
+         for (it in  binding.editTextTextPersonName.text.toString().trim()) {
+                if (!numberList.contains(it.toString())) {
                     Toast.makeText(this, "укажите целое число секунд", Toast.LENGTH_LONG).show()
+                    str="0"
+                    break
                 } else {
                     str = binding.editTextTextPersonName.text.toString().trim()
                 }

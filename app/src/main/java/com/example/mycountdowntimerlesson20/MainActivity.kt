@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -25,12 +26,26 @@ class MainActivity : AppCompatActivity() {
             this,
             Observer { binding.tvStartDownTimer.text = mViewModel.liveData.value })
 
+        mViewModel.liveDataBool.observe(
+            this,
+            Observer {
+                if (mViewModel.liveDataBool.value == true) {
+                    Toast.makeText(this, "Finish", Toast.LENGTH_LONG).show()
+                    vibro(this)
+                    binding.imageView.visibility = View.VISIBLE
+                } else {
+                    binding.imageView.visibility = View.GONE
+                }
+            })
+
+
+
         binding.tvStartDownTimer.setOnClickListener {
             var str = "0"
-         for (it in  binding.editTextTextPersonName.text.toString().trim()) {
+            for (it in binding.editTextTextPersonName.text.toString().trim()) {
                 if (!numberList.contains(it.toString())) {
                     Toast.makeText(this, "укажите целое число секунд", Toast.LENGTH_LONG).show()
-                    str="0"
+                    str = "0"
                     break
                 } else {
                     str = binding.editTextTextPersonName.text.toString().trim()
@@ -38,17 +53,18 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (mViewModel.liveData.value == null || mViewModel.liveData.value == "0") {
-                 mViewModel.startTimer(str.toLong(),binding.imageView)//
-
+                if (str != "0") {
+                    mViewModel.startTimer(str.toLong())//
+                } else {
+                    Toast.makeText(this, "укажите целое число секунд", Toast.LENGTH_LONG).show()
+                }
             } else {
-                mViewModel.countDownTimer.cancel()
-                mViewModel.liveData.value = "0"
+                mViewModel.sbrosTimer()
                 Toast.makeText(getApplication(), "Таймер сброшен", Toast.LENGTH_LONG).show()
                 vibro(this)
             }
         }
     }
-
 
 
 }

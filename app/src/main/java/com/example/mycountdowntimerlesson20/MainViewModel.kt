@@ -1,42 +1,40 @@
 package com.example.mycountdowntimerlesson20
 
-import android.app.Application
-import android.opengl.Visibility
 import android.os.CountDownTimer
-import android.view.View
-import android.view.View.GONE
-import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintSet.GONE
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class MainViewModel(): ViewModel() {
+class MainViewModel() : ViewModel() {
+    val numberList = listOf<String>("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 
+    val liveData = MutableLiveData<String>()
 
-    val liveData=MutableLiveData<String>()
+    val liveDataBool = MutableLiveData<Boolean>()
+    val liveDataBoolToastUCCHS = MutableLiveData<Boolean>()
+    val liveDataBoolToastVibroSbros = MutableLiveData<Boolean>()
 
-    val liveDataBool=MutableLiveData<Boolean>()
+    lateinit var countDownTimer: CountDownTimer
 
-lateinit var countDownTimer:CountDownTimer
+    fun startTimer(timeSecond: Long) {
 
-    fun startTimer(timeSecond:Long){
-
-        countDownTimer= object : CountDownTimer(timeSecond*1000+1000,1){
+        countDownTimer = object : CountDownTimer(timeSecond * 1000 + 1000, 1) {
             override fun onTick(millisUntilFinished: Long) {
-             //   binding.tvCount.text = (millisUntilFinished/1000).toString()
-                liveDataBool.value=false
-                liveData.value=(millisUntilFinished/1000).toString()
+                //   binding.tvCount.text = (millisUntilFinished/1000).toString()
+                liveDataBool.value = false
+                liveDataBoolToastVibroSbros.value = false
+                liveDataBoolToastUCCHS.value = false
+                liveData.value = (millisUntilFinished / 1000).toString()
 
                 //view.visibility=View.GONE
             }
 
             override fun onFinish() {
-                liveData.value="0"
+                liveData.value = "0"
 
-                liveDataBool.value=true    //Toast.makeText(getApplication(),"Finish",Toast.LENGTH_LONG).show()
+                liveDataBool.value =
+                    true    //Toast.makeText(getApplication(),"Finish",Toast.LENGTH_LONG).show()
 //vibro(getApplication())
-               // view.visibility=View.VISIBLE
+                // view.visibility=View.VISIBLE
 
             }
 
@@ -44,8 +42,37 @@ lateinit var countDownTimer:CountDownTimer
 
 
     }
-fun sbrosTimer(){
-    countDownTimer.cancel()
-    liveData.value = "0"
-}
+
+    fun sbrosTimer() {
+        countDownTimer.cancel()
+        liveData.value = "0"
+    }
+
+    fun onStartTimerClick(edText: String) {
+        var str = "0"
+        for (it in edText.toString().trim()) {
+            if (!numberList.contains(it.toString())) {
+                liveDataBoolToastUCCHS.value = true
+                // Toast.makeText(this, "укажите целое число секунд", Toast.LENGTH_LONG).show()
+                str = "0"
+                break
+            } else {
+                str = edText.toString().trim()
+            }
+        }
+
+        if (liveData.value == null || liveData.value == "0") {
+            if (str != "0") {
+                startTimer(str.toLong())//
+            } else {
+                liveDataBoolToastUCCHS.value = true
+                //Toast.makeText(this, "укажите целое число секунд", Toast.LENGTH_LONG).show()
+            }
+        } else {
+            sbrosTimer()
+            liveDataBoolToastVibroSbros.value = true
+            // Toast.makeText(getApplication(), "Таймер сброшен", Toast.LENGTH_LONG).show()
+            // vibro(this)
+        }
+    }
 }

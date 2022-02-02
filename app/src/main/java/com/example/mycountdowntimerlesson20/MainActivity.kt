@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.mycountdowntimerlesson20.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    val numberList = listOf<String>("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+
     lateinit var mViewModel: MainViewModel
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +22,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        mViewModel.liveDataBool.value = false
+        mViewModel.liveDataBoolToastVibroSbros.value = false
+        mViewModel.liveDataBoolToastUCCHS.value = false
         mViewModel.liveData.observe(
             this,
             Observer { binding.tvStartDownTimer.text = mViewModel.liveData.value })
@@ -29,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         mViewModel.liveDataBool.observe(
             this,
             Observer {
-                if (mViewModel.liveDataBool.value == true) {
+                if (it == true) {
                     Toast.makeText(this, "Finish", Toast.LENGTH_LONG).show()
                     vibro(this)
                     binding.imageView.visibility = View.VISIBLE
@@ -38,32 +41,22 @@ class MainActivity : AppCompatActivity() {
                 }
             })
 
-
-
-        binding.tvStartDownTimer.setOnClickListener {
-            var str = "0"
-            for (it in binding.editTextTextPersonName.text.toString().trim()) {
-                if (!numberList.contains(it.toString())) {
-                    Toast.makeText(this, "укажите целое число секунд", Toast.LENGTH_LONG).show()
-                    str = "0"
-                    break
-                } else {
-                    str = binding.editTextTextPersonName.text.toString().trim()
-                }
-            }
-
-            if (mViewModel.liveData.value == null || mViewModel.liveData.value == "0") {
-                if (str != "0") {
-                    mViewModel.startTimer(str.toLong())//
-                } else {
-                    Toast.makeText(this, "укажите целое число секунд", Toast.LENGTH_LONG).show()
-                }
-            } else {
-                mViewModel.sbrosTimer()
-                Toast.makeText(getApplication(), "Таймер сброшен", Toast.LENGTH_LONG).show()
+        mViewModel.liveDataBoolToastVibroSbros.observe(this, {
+            if (it == true) {
+                Toast.makeText(this, "Таймер сброшен", Toast.LENGTH_LONG).show()
                 vibro(this)
             }
+        })
+        mViewModel.liveDataBoolToastUCCHS.observe(this, {
+            if (it == true) {
+                Toast.makeText(this, "укажите целое число секунд", Toast.LENGTH_LONG).show()
+            }
+        })
+
+        binding.tvStartDownTimer.setOnClickListener {
+            mViewModel.onStartTimerClick(binding.editTextTextPersonName.text.toString())
         }
+
     }
 
 

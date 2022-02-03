@@ -19,22 +19,15 @@ class MainViewModel() : ViewModel() {
 
         countDownTimer = object : CountDownTimer(timeSecond * 1000 + 1000, 1) {
             override fun onTick(millisUntilFinished: Long) {
-                //   binding.tvCount.text = (millisUntilFinished/1000).toString()
-                liveDataBool.value = false
-                liveDataBoolToastVibroSbros.value = false
-                liveDataBoolToastUCCHS.value = false
+
                 liveData.value = (millisUntilFinished / 1000).toString()
 
-                //view.visibility=View.GONE
             }
 
             override fun onFinish() {
                 liveData.value = "0"
 
-                liveDataBool.value =
-                    true    //Toast.makeText(getApplication(),"Finish",Toast.LENGTH_LONG).show()
-//vibro(getApplication())
-                // view.visibility=View.VISIBLE
+                liveDataBool.value = true
 
             }
 

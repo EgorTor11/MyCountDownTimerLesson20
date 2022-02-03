@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyCountDownTimerLesson20/app/src/main/res/layout/act_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/User/AndroidStudioProjects/MyCountDownTimerLesson20/app/src/main/res/layout/activity_main.xml" value="0.24010416666666667" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyCountDownTimerLesson20/app/src/main/res/layout/activity_main2.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/MyCountDownTimerLesson20/app/src/main/res/layout/activity_main3.xml" value="0.1" />
       </map>
     </option>
   </component>
